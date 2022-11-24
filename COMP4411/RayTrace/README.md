@@ -61,7 +61,7 @@ https://courses.cs.washington.edu/courses/cse457/21au/src/trace/trace.php
 
 18. [4B] Constructive Solid Geometry
 
-19. [4B] Particle Systems Simulation & Renderer {457没有(这不应该是Animator里面的吗)}
+19. [4B] Particle Systems Simulation & Renderer 
 
 20. [4B] Caustics
 
