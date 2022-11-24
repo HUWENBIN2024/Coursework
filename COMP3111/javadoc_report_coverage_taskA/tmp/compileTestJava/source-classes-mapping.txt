@@ -1,0 +1,12 @@
+comp3111/covid/TesterTaskA2.java
+ comp3111.covid.TesterTaskA2
+ comp3111.covid.TesterTaskA2$1
+ comp3111.covid.TesterTaskA2$2
+ comp3111.covid.TesterTaskA2$3
+ comp3111.covid.TesterTaskA2$4
+ comp3111.covid.TesterTaskA2$5
+comp3111/covid/TesterTaskA1.java
+ comp3111.covid.TesterTaskA1
+comp3111/covid/TesterController.java
+ comp3111.covid.TesterController
+ comp3111.covid.TesterController$1

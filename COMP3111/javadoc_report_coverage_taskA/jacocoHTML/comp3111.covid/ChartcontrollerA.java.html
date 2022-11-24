@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartcontrollerA.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deCOVID</a> &gt; <a href="index.source.html" class="el_package">comp3111.covid</a> &gt; <span class="el_source">ChartcontrollerA.java</span></div><h1>ChartcontrollerA.java</h1><pre class="source lang-java linenums">package comp3111.covid;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+/**
+ * This is the controller class building on &quot;tablegeneratorA.fxml&quot; for generating table
+ * @author fangxiao
+ * 
+ */
+<span class="fc" id="L35">public class ChartcontrollerA {</span>
+	
+    @FXML
+    private Button Return;
+    
+    @FXML
+    private TextArea Textconsolechart;
+    
+    @FXML
+    private LineChart&lt;String, Number&gt; linechart;
+    
+    /**
+     * it is called by main controller to pass the data to chart controller.
+     * @param begin
+     * @param end
+     * @param selectedcountry
+     * 
+     */
+	public void initData(String begin, String end,LinkedList&lt;String&gt;selectedcountry) {
+<span class="fc" id="L54">		 setupchart(begin,end,selectedcountry);</span>
+<span class="fc" id="L55">	}</span>
+	
+	/**
+	 * This is the main function to perform chart set up.
+	 * @param begin
+	 * @param end
+	 * @param selectedcountry
+	 * 
+	 */
+	void setupchart(String begin, String end,LinkedList&lt;String&gt;selectedcountry) {
+<span class="fc" id="L65">		linechart.setTitle(&quot;Cumulative Confirmed COVID-19 Cases(per 1M)&quot;);</span>
+<span class="fc" id="L66">		linechart.setCursor(Cursor.CROSSHAIR);</span>
+<span class="fc" id="L67">        TaskA2 temp = new TaskA2();</span>
+<span class="fc" id="L68">        ArrayList&lt;String&gt; datalist = temp.storedata(begin, end, selectedcountry);</span>
+        try {
+<span class="fc" id="L70">        	String[] split_data = datalist.get(0).split(&quot; &quot;);</span>
+<span class="fc" id="L71">        	String previous_country = &quot;hhh&quot;;</span>
+<span class="fc" id="L72">        	HashSet&lt;String&gt; available_countrylist = temp.getAvailable_country();</span>
+<span class="fc" id="L73">        	int number_of_country = available_countrylist.size();</span>
+<span class="fc" id="L74">        	int count =0;</span>
+			@SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L76">			Series&lt;String,Number&gt;[] series = new Series[number_of_country];</span>
+<span class="fc" id="L77">        	String chartreport =&quot;&quot;;</span>
+<span class="fc" id="L78">        	String begin_date =&quot;&quot;;  // this is used to record the beginning date of particular country</span>
+<span class="fc" id="L79">        	String end_date = &quot;&quot;;  // this is used to record the end date of particular country</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        	for(int i=0;i&lt;datalist.size();i++) {</span>
+<span class="fc" id="L81">        		split_data = datalist.get(i).split(&quot;,&quot;);</span>
+<span class="fc" id="L82">        		String current_country = split_data[0];</span>
+<span class="fc" id="L83">        		String current_date = split_data[1];</span>
+<span class="fc" id="L84">        		String confirmedperm = split_data[2];</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        		if(!current_country.equals(previous_country)) {</span>
+<span class="fc" id="L86">        			series[count]= new Series&lt;String, Number&gt;();</span>
+<span class="fc" id="L87">        			linechart.getData().add(series[count]);</span>
+<span class="fc" id="L88">        			series[count].setName(current_country);</span>
+<span class="fc" id="L89">        			begin_date = current_date;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        			if (!begin_date.equals(TaskA2.transformdate(begin))) {</span>
+<span class="fc" id="L91">        				String tempreport = &quot;We just have data of &quot; + current_country+&quot; from &quot; + begin_date;</span>
+<span class="fc" id="L92">        				chartreport += tempreport;</span>
+<span class="fc bfc" id="L93" title="All 4 branches covered.">        				if(i == datalist.size()-1 || !datalist.get(i+1).split(&quot;,&quot;)[0].equals(current_country)) {</span>
+<span class="fc" id="L94">        					chartreport = chartreport+ &quot; to &quot;+current_date+&quot;(the data we have begins at &quot;+begin_date+&quot;)&quot;+&quot;\n&quot;;</span>
+        				}
+<span class="fc" id="L96">        			}</span>
+        			// i is the last data or the next data country is not equal to current country(the last date)
+    				// this is the situation we only have one data points of this country
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">        			else if(i == datalist.size()-1 || !datalist.get(i+1).split(&quot;,&quot;)[0].equals(current_country)) {</span>
+<span class="fc" id="L100">    					chartreport = &quot;We just have data of &quot; + current_country+&quot; from &quot; + begin_date+&quot; to &quot;+current_date+&quot;(the data we have ends at &quot;+current_date+&quot;)&quot;+&quot;\n&quot;;</span>
+    				}
+<span class="fc" id="L102">        			Data &lt;String, Number&gt; nodedata = new Data&lt;String, Number&gt;(current_date, Float.parseFloat(confirmedperm));</span>
+<span class="fc" id="L103">        			series[count].getData().add(nodedata);</span>
+<span class="fc" id="L104">        			String countryname = series[count].getName();</span>
+<span class="fc" id="L105">        			nodedata.setNode(new HoveredNode(countryname,nodedata.getXValue().toString(),nodedata.getYValue().floatValue()));</span>
+<span class="fc" id="L106">        			previous_country = current_country;</span>
+<span class="fc" id="L107">        			count +=1;</span>
+<span class="fc" id="L108">        		}</span>
+        		// where the data is not the beginning date(middle point or end point)
+        		else {
+<span class="fc" id="L111">        			end_date = current_date;</span>
+<span class="fc" id="L112">        			Data &lt;String, Number&gt; nodedata = new Data&lt;String, Number&gt;(current_date, Float.parseFloat(confirmedperm));</span>
+<span class="fc" id="L113">        			String countryname = series[count-1].getName();</span>
+<span class="fc" id="L114">        			nodedata.setNode(new HoveredNode(countryname,nodedata.getXValue().toString(),nodedata.getYValue().floatValue()));</span>
+<span class="fc" id="L115">        			series[count-1].getData().add(nodedata);</span>
+<span class="fc bfc" id="L116" title="All 6 branches covered.">        			if(begin_date.equals(TaskA2.transformdate(begin)) &amp;&amp; (i == datalist.size()-1 || (!datalist.get(i+1).split(&quot;,&quot;)[0].equals(current_country)))</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        					&amp;&amp; (!end_date.equals(TaskA2.transformdate(end)))) {</span>
+<span class="fc" id="L118">        				String tempreport = &quot;We just have data of &quot; +current_country+&quot; from &quot; + begin_date+&quot; to &quot;+end_date+&quot;(the data we have ends at &quot;+end_date+&quot;)&quot;+&quot;\n&quot;;</span>
+<span class="fc" id="L119">        				chartreport +=tempreport;</span>
+<span class="fc" id="L120">        			}</span>
+        			// when the beginning date is not equal to the begin date we require.
+<span class="fc bfc" id="L122" title="All 6 branches covered.">        			else if((!begin_date.equals(TaskA2.transformdate(begin))) &amp;&amp;(i == datalist.size()-1 || (!datalist.get(i+1).split(&quot;,&quot;)[0].equals(current_country)))) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        				if (!end_date.equals(TaskA2.transformdate(end))) {</span>
+<span class="fc" id="L124">        					chartreport = chartreport+&quot; to &quot;+current_date+&quot;(the data we have begins at &quot;+begin_date+&quot; and ends at &quot;+end_date+&quot;)&quot;+&quot;\n&quot;;</span>
+        				}
+        				else {
+<span class="fc" id="L127">        					chartreport = chartreport+&quot; to &quot;+current_date+&quot;(the data we have begins at &quot;+begin_date+&quot;)&quot;+&quot;\n&quot;;	</span>
+        				}      			
+    				}
+        			else;
+        		}
+        	}
+<span class="fc" id="L133">        	ArrayList&lt;String&gt; datelist = temp.getallDates(TaskA2.transformdate(begin), TaskA2.transformdate(end));</span>
+<span class="fc" id="L134">        	CategoryAxis xAxis = (CategoryAxis) linechart.getXAxis();</span>
+<span class="fc" id="L135">            ObservableList&lt;String&gt; categories = FXCollections.observableArrayList(datelist);</span>
+<span class="fc" id="L136">            xAxis.setCategories(categories);</span>
+<span class="fc" id="L137">            xAxis.setAutoRanging(true);</span>
+<span class="fc" id="L138">        	String nodatacountry=&quot;&quot;;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        	if(available_countrylist.size()!=selectedcountry.size()) {</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        		for(String all_country:selectedcountry) {</span>
+<span class="fc" id="L141">        			String country=&quot;&quot;;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        			for(String country_have_data:available_countrylist) {</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        				if(all_country.equals(country_have_data)) {</span>
+<span class="fc" id="L144">        					country = country_have_data;</span>
+        				}
+<span class="fc" id="L146">        			}</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        			if(!country.equals(all_country)) nodatacountry += all_country+&quot; &quot;;        			</span>
+<span class="fc" id="L148">        		}</span>
+        	}
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        	if(!nodatacountry.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L151">        		chartreport += &quot;There is no available data in these days: &quot;+nodatacountry+&quot;\n&quot;;</span>
+        	}
+<span class="fc" id="L153">        	Textconsolechart.setText(chartreport);</span>
+        }
+<span class="fc" id="L155">        catch(Exception e){</span>
+<span class="fc" id="L156">        	Textconsolechart.setText(&quot;There is no data available in these days of all countries&quot;);</span>
+<span class="fc" id="L157">        }</span>
+<span class="fc" id="L158">	}</span>
+	
+	/**
+	 * it is used to return to the main ui (ui.fxml)
+	 * @param event
+	 * @throws IOException
+	 * 
+	 */
+    @FXML
+    void Returntoui(ActionEvent event) throws IOException {
+<span class="nc" id="L168">    	Parent root = FXMLLoader.load(getClass().getResource(&quot;/ui.fxml&quot;));</span>
+<span class="nc" id="L169">		Scene uiscene = new Scene(root);</span>
+<span class="nc" id="L170">		Stage uiwindow = (Stage) ((Node)event.getSource()).getScene().getWindow(); </span>
+<span class="nc" id="L171">		uiwindow.setScene(uiscene);</span>
+<span class="nc" id="L172">		uiwindow.show();</span>
+<span class="nc" id="L173">    }</span>
+    
+    /**
+     * get the console in the chart ui
+     * @return
+     * 
+     */
+    public TextArea getTextconsolechart() {
+<span class="fc" id="L181">    	return Textconsolechart;</span>
+    }
+    
+    /**
+     * This class is used to create the node that can be hovered
+     * @author fangxiao
+     *
+     */
+    class HoveredNode extends StackPane {
+<span class="fc" id="L190">        HoveredNode(String country,String date,float value) {</span>
+<span class="fc" id="L191">          setPrefSize(6, 6);</span>
+
+<span class="fc" id="L193">          final Label label = createDataThresholdLabel(value);</span>
+
+<span class="fc" id="L195">          setOnMouseEntered(new EventHandler&lt;MouseEvent&gt;() {</span>
+            @Override public void handle(MouseEvent mouseEvent) {
+<span class="nc" id="L197">              getChildren().setAll(label);</span>
+<span class="nc" id="L198">              Textconsolechart.setText(&quot;Country: &quot;+country+&quot;, Date: &quot;+date+ &quot;, Confirmed(per Million): &quot;+String.valueOf(value));</span>
+<span class="nc" id="L199">              setCursor(Cursor.NONE);</span>
+<span class="nc" id="L200">              toFront();</span>
+<span class="nc" id="L201">            }</span>
+          });
+<span class="fc" id="L203">          setOnMouseExited(new EventHandler&lt;MouseEvent&gt;() {</span>
+            @Override public void handle(MouseEvent mouseEvent) {
+<span class="nc" id="L205">              getChildren().clear();</span>
+<span class="nc" id="L206">              setCursor(Cursor.CROSSHAIR);</span>
+<span class="nc" id="L207">            }</span>
+          });
+<span class="fc" id="L209">        }</span>
+        
+        private Label createDataThresholdLabel(float value) {
+<span class="fc" id="L212">          final Label label = new Label(value + &quot;&quot;);</span>
+<span class="fc" id="L213">          label.getStyleClass().addAll(&quot;default-color0&quot;, &quot;chart-line-symbol&quot;, &quot;chart-series-line&quot;);</span>
+<span class="fc" id="L214">          label.setStyle(&quot;-fx-font-size: 12; -fx-font-weight: bold;&quot;);</span>
+<span class="fc" id="L215">          label.setTextFill(Color.BLUEVIOLET);</span>
+<span class="fc" id="L216">          label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);</span>
+<span class="fc" id="L217">          return label;</span>
+        }
+      }
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

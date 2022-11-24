@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="comp3111.covid.TesterTaskA2" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-04-30T06:14:42" hostname="LAPTOP-BBJ23NCS" time="25.005">
+  <properties/>
+  <testcase name="test1" classname="comp3111.covid.TesterTaskA2" time="9.281"/>
+  <testcase name="test2" classname="comp3111.covid.TesterTaskA2" time="5.188"/>
+  <testcase name="test3" classname="comp3111.covid.TesterTaskA2" time="3.6"/>
+  <testcase name="test4" classname="comp3111.covid.TesterTaskA2" time="1.89"/>
+  <testcase name="test5" classname="comp3111.covid.TesterTaskA2" time="5.046"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TablecontrollerA.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deCOVID</a> &gt; <a href="index.source.html" class="el_package">comp3111.covid</a> &gt; <span class="el_source">TablecontrollerA.java</span></div><h1>TablecontrollerA.java</h1><pre class="source lang-java linenums">package comp3111.covid;
+import java.io.IOException;
+import java.util.LinkedList;
+
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+/**
+ * This is the controller class building on &quot;tablegeneratorA.fxml&quot; for generating table
+ * @author fangxiao
+ * 
+ */
+<span class="fc" id="L26">public class TablecontrollerA {  // this controller is used for generating table.</span>
+	private LinkedList&lt;String&gt; datalist;
+    
+    @FXML
+    private TextArea title;
+    
+    @FXML
+    private Button Return;
+    
+    @FXML
+    private TextArea TableAreaconsoletable;
+    
+    @FXML
+    private TableView&lt;UtilA&gt; tableview;
+    
+    @FXML
+    private TableColumn&lt;UtilA,String&gt; countrycolumn;
+    
+    @FXML
+    private TableColumn&lt;UtilA,String&gt; totalcasecolumn;
+    
+    @FXML
+    private TableColumn&lt;UtilA,String&gt; totalpermillioncolumn;
+	
+    /**
+     * This is the function to pass the data to the controller
+     * @param data_date
+     * @param selectedcountry
+     * @throws Exception
+     * 
+     */
+    public void initData(String data_date, LinkedList&lt;String&gt;selectedcountry) throws Exception {
+<span class="fc" id="L58">    	TaskA1 temp = new TaskA1();</span>
+    	try {
+<span class="fc" id="L60">    		datalist = temp.storedatacountry(data_date,selectedcountry);</span>
+<span class="fc" id="L61">    		datalist.getFirst();</span>
+    		try {
+<span class="fc" id="L63">    			LinkedList&lt;String&gt; templist = temp.getNocountrydata();</span>
+<span class="fc" id="L64">    			String report =&quot;&quot;;</span>
+<span class="fc" id="L65">    			report = templist.getFirst()+&quot; &quot;;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    			for(int i=1;i&lt;templist.size();i++) {</span>
+<span class="fc" id="L67">    				report = report+templist.get(i)+&quot; &quot;;</span>
+    			}
+<span class="fc" id="L69">    			TableAreaconsoletable.setText(&quot;We do not have data about: &quot;+report+&quot;on &quot;+TaskA2.transformdate(data_date));</span>
+    		}
+<span class="nc" id="L71">    		catch(Exception e) {</span>
+    			
+<span class="fc" id="L73">    		}</span>
+<span class="fc" id="L74">    		setuptable(datalist);</span>
+    	}
+<span class="fc" id="L76">    	catch(Exception e) {</span>
+<span class="fc" id="L77">    		TableAreaconsoletable.setText(&quot;We do not have data about all countries on &quot;+TaskA2.transformdate(data_date));</span>
+<span class="fc" id="L78">    	}</span>
+<span class="fc" id="L79">	    title.setText(&quot;Number of Confirmed COVID-19 Cases as of &quot;+data_date);	</span>
+<span class="fc" id="L80">    }</span>
+    
+    /**
+     * This is the main function to perform table set up.
+     * @param datalist
+     * @throws Exception
+     * 
+     */
+	public void setuptable(LinkedList&lt;String&gt; datalist) throws Exception {
+<span class="fc" id="L89">		countrycolumn.setCellValueFactory(new PropertyValueFactory&lt;UtilA,String&gt;(&quot;country&quot;));</span>
+<span class="fc" id="L90">		totalcasecolumn.setCellValueFactory(new PropertyValueFactory&lt;UtilA,String&gt;(&quot;totalcase&quot;));</span>
+<span class="fc" id="L91">		totalpermillioncolumn.setCellValueFactory(new PropertyValueFactory&lt;UtilA,String&gt;(&quot;totalpermillion&quot;));</span>
+<span class="fc" id="L92">		tableview.setItems(getdata());</span>
+<span class="fc" id="L93">	}</span>
+	
+	/**
+	 *  This method will return an ObservableList of String Objects which will be added to the table
+	 * @throws Exception 
+	 */
+	private ObservableList&lt;UtilA&gt; getdata() throws Exception {
+<span class="fc" id="L100">		ObservableList&lt;UtilA&gt; data = FXCollections.observableArrayList();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for(int i=0;i&lt;datalist.size();i++) {</span>
+<span class="fc" id="L102">			String[] split = null;</span>
+<span class="fc" id="L103">			split = datalist.get(i).split(&quot;,&quot;);</span>
+<span class="fc" id="L104">			data.add(new UtilA(new SimpleStringProperty(split[0]),new SimpleStringProperty(split[1]), new SimpleStringProperty(split[2])));</span>
+		}
+<span class="fc" id="L106">		return data;</span>
+	}
+	
+	/**
+	 * it is used to return to the main ui (ui.fxml)
+	 * @param event
+	 * @throws IOException
+	 * 
+	 */
+	@FXML
+    public void Returntoui(ActionEvent event) throws IOException {
+<span class="nc" id="L117">		Parent root = FXMLLoader.load(getClass().getResource(&quot;/ui.fxml&quot;));</span>
+<span class="nc" id="L118">		Scene uiscene = new Scene(root);</span>
+<span class="nc" id="L119">		Stage uiwindow = (Stage) ((Node)event.getSource()).getScene().getWindow(); </span>
+<span class="nc" id="L120">		uiwindow.setScene(uiscene);</span>
+<span class="nc" id="L121">		uiwindow.show();</span>
+<span class="nc" id="L122">    }</span>
+	
+	/**
+	 * get the console in the table ui
+	 * @return
+	 * 
+	 */
+	public TextArea getTextAreaconsoletable() {
+<span class="fc" id="L130">		return TableAreaconsoletable;		</span>
+	}
+	
+	/**
+	 * get the data list
+	 * @return
+	 * 
+	 */
+	public LinkedList&lt;String&gt; getdatalist(){
+<span class="fc" id="L139">		return datalist;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
