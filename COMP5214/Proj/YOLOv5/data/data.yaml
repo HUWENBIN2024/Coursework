@@ -1,0 +1,5 @@
+train: data/train/images
+val: data/train/images
+
+nc: 5
+names: ['no mask', 'improper', 'proper surgical', 'proper N95', 'proper cloth']
