@@ -9,7 +9,7 @@ https://courses.cs.washington.edu/courses/cse457/21au/src/animator/animator.php
 
 # Demo
 The first three are particle systems and the last one is a C2 interpolation curve.
-![demo](/particle1.png "demo1")
-![demo](/particle2.png "demo2")
-![demo](/particle3.png "demo3")
-![demo](/c2curve.png "demo3")
+![demo](particle1.png "demo1")
+![demo](particle2.png "demo2")
+![demo](particle3.png "demo3")
+![demo](c2curve.png "demo3")
