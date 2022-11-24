@@ -6,3 +6,4 @@
 4. COMP4471: Deep Learning in Computer Vision
 5. COMP5214: Advanced Deep Learning Architectures (a PG level course)
 6. Fudan Probablistic Reasoning for AI (fudan summer school)
+7. ELEC2600H: Probability and Random Processing for Engineering
