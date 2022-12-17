@@ -7,3 +7,5 @@
 5. COMP5214: Advanced Deep Learning Architectures (a PG level course)
 6. Fudan Probablistic Reasoning for AI (fudan summer school)
 7. ELEC2600H: Probability and Random Processing for Engineering
+8. COMP4222: Machine Learning with Graph neural network
+9. MATH3121: Abstract Algebra
