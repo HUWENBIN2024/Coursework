@@ -1,5 +1,4 @@
-# Gold Miner
-## 项目介绍: 该项目基于MARS模拟器， 利用MIPS汇编语言实现经典游戏黄金矿工。实现细节在repo的pdf中详细介绍。
-![gold_miner_demo](demo.png "Gold Miner")
-
-## 项目来源: COMP2611 in HKUST
+# HKUST COMP 2611
+- Project is the course project in COMP2611, which is about the game called Golden Minner. It is a MIPS simulator built by JAVA.
+- Course notes. Knowledge structure:
+![](./img1.png)
